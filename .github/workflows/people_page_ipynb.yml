@@ -1,6 +1,10 @@
 name: run-notebook
 
-on: [push]
+on:
+  workflow_run:
+    workflows: ["JSON check"]
+    types:
+      - completed
 
 jobs:
   run:
@@ -16,7 +20,6 @@ jobs:
         GITHUB: ${{ toJson(github) }}
       with:
         notebook: "people.ipynb"
-        params: "grad_students.json"
         isReport: False
         poll: True
     - uses: actions/upload-artifact@v3
